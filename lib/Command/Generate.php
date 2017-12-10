@@ -90,6 +90,11 @@ class Generate extends Command {
 				'user_id',
 				InputArgument::OPTIONAL,
 				'Generate previews for the given user'
+			)
+			->addArgument(
+				'path',
+				InputArgument::OPTIONAL,
+				'Only scan specific directory'
 			);
 	}
 
@@ -168,6 +173,13 @@ class Generate extends Command {
 	 */
 	private function parseFolder(Folder $folder) {
 		$this->output->writeln('Scanning folder ' . $folder->getPath());
+		
+		# ckn
+		# $input->getArgument('path') $folder->getPath()
+		$output->writeln($input->getArgument('path'));
+		$output->writeln("\n");
+		$output->writeln($folder->getPath());
+		# /ckn
 
 		$nodes = $folder->getDirectoryListing();
 
