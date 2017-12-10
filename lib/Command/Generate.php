@@ -165,7 +165,7 @@ class Generate extends Command {
 		\OC_Util::setupFS($user->getUID());
 
 		$userFolder = $this->rootFolder->getUserFolder($user->getUID());
-		$this->parseFolder($userFolder);
+		$this->parseFolder($userFolder.get("/SofortUpload/AutoSort")); # ckn
 	}
 
 	/**
@@ -176,6 +176,7 @@ class Generate extends Command {
 		
 		# ckn
 		# $input->getArgument('path') $folder->getPath()
+		# 
 		$output->writeln($input->getArgument('path'));
 		$output->writeln("\n");
 		$output->writeln($folder->getPath());
