@@ -112,6 +112,7 @@ class Generate extends Command {
 		$this->output = $output;
 
 		$userId = $input->getArgument('user_id');
+		$path = $input->getArgument('path');			
 		$this->calculateSizes();
 
 		if ($userId === null) {
@@ -121,7 +122,7 @@ class Generate extends Command {
 		} else {
 			$user = $this->userManager->get($userId);
 			if ($user !== null) {
-				$this->generateUserPreviews($user);
+				$this->generateUserPreviews($user, $path);
 			}
 		}
 
@@ -160,12 +161,13 @@ class Generate extends Command {
 	/**
 	 * @param IUser $user
 	 */
-	private function generateUserPreviews(IUser $user) {
+	private function generateUserPreviews(IUser $user, String $path) {
 		\OC_Util::tearDownFS();
 		\OC_Util::setupFS($user->getUID());
 
 		$userFolder = $this->rootFolder->getUserFolder($user->getUID());
-		$this->parseFolder($userFolder.get("/SofortUpload/AutoSort")); # ckn
+		if ($path) {$userFolder = $userFolder.get($path)}
+		$this->parseFolder($userFolder); # ckn
 	}
 
 	/**
@@ -175,10 +177,6 @@ class Generate extends Command {
 		$this->output->writeln('Scanning folder ' . $folder->getPath());
 		
 		# ckn
-		# $input->getArgument('path') $folder->getPath()
-		# 
-		$output->writeln($input->getArgument('path'));
-		$output->writeln("\n");
 		$output->writeln($folder->getPath());
 		# /ckn
 
