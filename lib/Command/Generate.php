@@ -89,12 +89,12 @@ class Generate extends Command {
 			->addArgument(
 				'user_id',
 				InputArgument::OPTIONAL,
-				'Generate previews for the given user'
+				'limit generation to a specific user'
 			)
 			->addArgument(
 				'path',
 				InputArgument::OPTIONAL,
-				'Only scan specific directory'
+				'limit generation to a specific folder'
 			);
 	}
 
@@ -161,7 +161,7 @@ class Generate extends Command {
 	/**
 	 * @param IUser $user
 	 */
-	private function generateUserPreviews(IUser $user, String $path) {
+	private function generateUserPreviews(IUser $user, $path = null) {
 		\OC_Util::tearDownFS();
 		\OC_Util::setupFS($user->getUID());
 
